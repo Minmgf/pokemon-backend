@@ -12,6 +12,11 @@ import {
 export class PokemonService {
   constructor(private readonly httpService: HttpService) {}
 
+  /**
+   * Obtiene lista de Pokemones desde la PokeAPI externa.
+   * Transforma los datos crudos a PokemonSummary.
+   * @param page - El número de página a obtener (por defecto es 1).
+   */
   async findAll(page: number = 1): Promise<PokemonSummary[]> {
     const limit = 10;
     const offset = (page - 1) * limit;
@@ -22,7 +27,7 @@ export class PokemonService {
     );
 
     return data.results.map((pokemon) => {
-      // Extract ID from URL: https://pokeapi.co/api/v2/pokemon/1/
+      // Extraer ID de la URL: https://pokeapi.co/api/v2/pokemon/1/
       const segments = pokemon.url.split('/').filter(Boolean);
       const idStr = segments.pop();
       const id = idStr ? parseInt(idStr, 10) : 0;
@@ -34,6 +39,12 @@ export class PokemonService {
     });
   }
 
+  /**
+   * Informacion detallada de un Pokémon por su ID.
+   * Mapea la respuesta compleja de PokeAPI a PokemonDetail.
+   * @param id - Identificador del Pokémon.
+   * @throws NotFoundException si el Pokémon no es encontrado.
+   */
   async findOne(id: number): Promise<PokemonDetail> {
     try {
       const { data } = await firstValueFrom(

@@ -1,9 +1,11 @@
+// Interfaz de un Pokémon.
 export interface PokemonSummary {
   id: number;
   name: string;
   image: string;
 }
 
+// Interfaz extendida para la vista detallada de un Pokémon.
 export interface PokemonDetail extends PokemonSummary {
   stats: {
     hp: number;
@@ -15,7 +17,7 @@ export interface PokemonDetail extends PokemonSummary {
   abilities: string[];
 }
 
-// Interfaces for PokeAPI raw responses to ensure type safety when fetching
+// Estructura cruda de la respuesta de la PokeAPI (lista).
 export interface PokeAPIPokemonListResponse {
   count: number;
   next: string | null;
@@ -26,6 +28,10 @@ export interface PokeAPIPokemonListResponse {
   }[];
 }
 
+/**
+ * Estructura completa de la PokeAPI (detalle).
+ * Mapea la estructura compleja externa a una interfaz tipada para un acceso seguro.
+ */
 export interface PokeAPIPokemonDetailResponse {
   id: number;
   name: string;
