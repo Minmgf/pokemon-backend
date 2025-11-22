@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { apiReference } from '@scalar/nestjs-api-reference';
 import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
@@ -11,7 +10,7 @@ async function bootstrap() {
   // CORS para peticiones
   app.enableCors();
 
-  // Swagger Documentacion
+  // Swagger
   const config = new DocumentBuilder()
     .setTitle('Prueba Tecnica API')
     .setDescription('Prueba Tecnica API description')
@@ -20,7 +19,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  // Scalar Documentacion
+  // Scalar
+  const { apiReference } = await import('@scalar/nestjs-api-reference');
   app.use(
     '/reference',
     apiReference({
